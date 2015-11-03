@@ -1,6 +1,18 @@
 # powur: simple js package manager
 
-Powur is a simple package manager for javascript libraries that is not based on a repository. This allows installing any package that exists on GitHub. Currently only GitHub is supported as a source. Below is an example of some common libraries. The `version` specifies what versions to match using the standard matching format with `~`, `^`, `>`, `>=`, `<` or `<=`. The `url` specifies where to download the package which must be either a `zip`, `tar` or `tar.gz` file. The `version_url` specifies where to get a list of released versions of a package currently only GitHub tags or releases can be used. Included files are mapped in `include` the key being the file to match with double wildcard support and the value being the output location. Below is an example `powur.json` configuration, to download the packages run `python2 powur.py install`.
+Powur is a simple package manager for javascript libraries that is not based
+on a repository. This allows installing any package that exists on GitHub.
+Currently only GitHub is supported as a source. The `version` specifies what
+versions to match using the standard matching format with `~`, `^`, `>`, `>=`,
+`<` or `<=`. The `url` specifies where to download the package which must be
+either a `zip`, `tar` or `tar.gz` file. The `version_url` specifies where to
+get a list of released versions of a package currently only GitHub tags or
+releases can be used. Included files are mapped in `include` the key being the
+file to match with double wildcard support and the value being the output
+location. Output directory must have a tailing `/`. The keywords `{name}` and
+`{version}` can be used to refrence the packages name and version. Below is an
+example `powur.json` configuration, to download the packages run
+`python2 powur.py install`.
 
 ```
 {
