@@ -275,8 +275,10 @@ def deinit():
     except:
         pass
 
-def iter_packages():
+def iter_packages(names=None):
     for name in powur_conf:
+        if names and name not in names:
+            continue
         powur_conf[name]['name'] = name
         yield Package(powur_conf[name])
 
@@ -285,7 +287,9 @@ if __name__ == '__main__':
     try:
         command = sys.argv[1] if len(sys.argv) > 1 else None
         if command == 'install':
-            for pkg in iter_packages():
+            packages = set(sys.argv[2:]) or None
+
+            for pkg in iter_packages(packages):
                 print '%s=%s' % (pkg.name, pkg.version)
                 pkg.install()
         else:
