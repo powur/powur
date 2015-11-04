@@ -14,7 +14,7 @@ location. Output directory must have a tailing `/`. The keywords `{name}` and
 example `powur.json` configuration, to download the packages run
 `python2 powur.py install`.
 
-```
+```json
 {
     "powur": {
         "vendor_path": "vendor",
