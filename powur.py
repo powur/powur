@@ -216,12 +216,12 @@ class Package(object):
                 output_dir = output_path
             else:
                 output_dir = os.path.dirname(output_path)
-            if os.path.exists(output_path):
-                if not os.path.isdir(output_path):
+            if os.path.exists(output_dir):
+                if not os.path.isdir(output_dir):
                     raise IOError('Directory overwrite ' +
-                                  'file error "%s"' % output_path)
+                                  'file error "%s"' % output_dir)
             else:
-                os.makedirs(output_path)
+                os.makedirs(output_dir)
 
             for output_base, extract_path in extract_paths:
                 if output_base:
