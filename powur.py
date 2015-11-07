@@ -211,13 +211,17 @@ class Package(object):
 
             if not extract_paths:
                 continue
-            elif output_path.endswith('/'):
-                if os.path.exists(output_path):
-                    if not os.path.isdir(output_path):
-                        raise IOError('Directory overwrite ' +
-                            'file error "%s"' % output_path)
-                else:
-                    os.makedirs(output_path)
+
+            if output_path.endswith('/'):
+                output_dir = output_path
+            else:
+                output_dir = os.path.dirname(output_path)
+            if os.path.exists(output_path):
+                if not os.path.isdir(output_path):
+                    raise IOError('Directory overwrite ' +
+                                  'file error "%s"' % output_path)
+            else:
+                os.makedirs(output_path)
 
             for output_base, extract_path in extract_paths:
                 if output_base:
