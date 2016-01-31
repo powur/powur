@@ -37,7 +37,7 @@ class Package(object):
         self.version = self.find_version()
         if not self.version:
             raise ValueError('Failed to find matching ' +
-                             'version for "%s"' % conf['name'])
+                'version for "%s"' % conf['name'])
 
         self.url = self.parse_str(conf['url'])
 
@@ -154,7 +154,7 @@ class Package(object):
             if output_path:
                 output_path = os.path.join(vendor_path, output_path)
             else:
-                output_path = vendor_path
+                output_path = vendor_path + '/'
             extract_paths = []
 
             for arc_path in name_list:
@@ -216,10 +216,11 @@ class Package(object):
                 output_dir = output_path
             else:
                 output_dir = os.path.dirname(output_path)
+
             if os.path.exists(output_dir):
                 if not os.path.isdir(output_dir):
                     raise IOError('Directory overwrite ' +
-                                  'file error "%s"' % output_dir)
+                        'file error "%s"' % output_dir)
             else:
                 os.makedirs(output_dir)
 
