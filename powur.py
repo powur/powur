@@ -70,6 +70,8 @@ class Package(object):
             raise ValueError('Unknown version url "%s"' % self.version_url)
 
         versions = [x.lstrip('v') for x in versions]
+        versions.sort()
+        versions.reverse()
 
         return versions
 
