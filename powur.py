@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 import sys
+import re
 import zipfile
 import tarfile
 import uuid
@@ -22,6 +23,7 @@ if GITHUB_USERNAME and GITHUB_TOKEN:
 vendor_path = 'vendor'
 temp_path = 'vendor/powur_temp'
 powur_conf = None
+version_re = re.compile('^(\d+\.)?(\d+\.)?(\*|\d+)$')
 
 class Package(object):
     def __init__(self, conf):
@@ -70,13 +72,14 @@ class Package(object):
             raise ValueError('Unknown version url "%s"' % self.version_url)
 
         versions = [x.lstrip('v') for x in versions]
-        versions.sort()
+        versions = [x for x in versions if version_re.match(x)]
+        versions.sort(key=lambda x: map(int, x.split('.')))
         versions.reverse()
 
         return versions
 
     def find_version(self):
-        versions = [x.lstrip('v') for x in self.get_versions()]
+        versions = self.get_versions()
 
         want_strip = self.version_want.lstrip('~').lstrip('^').lstrip(
             '>=').lstrip('>').lstrip('<=').lstrip('<')
