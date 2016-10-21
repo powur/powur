@@ -79,26 +79,24 @@ class Package(object):
         return versions
 
     def find_version(self):
-        versions = self.get_versions()
-
         want_strip = self.version_want.lstrip('~').lstrip('^').lstrip(
             '>=').lstrip('>').lstrip('<=').lstrip('<')
         want_split = want_strip.split('.')
 
         if self.version_want.startswith('~'):
-            for version in versions:
+            for version in self.get_versions():
                 split = version.split('.')
                 if want_split[0] == split[0] and want_split[1] == split[1]:
                     return version
         elif self.version_want.startswith('^'):
-            for version in versions:
+            for version in self.get_versions():
                 split = version.split('.')
                 if want_split[0] == split[0]:
                     return version
         elif self.version_want.startswith('>'):
             equal = self.version_want.startswith('>=')
 
-            for version in versions:
+            for version in self.get_versions():
                 if equal and version == want_strip:
                     return version
 
@@ -113,7 +111,7 @@ class Package(object):
         elif self.version_want.startswith('<'):
             equal = self.version_want.startswith('<=')
 
-            for version in versions:
+            for version in self.get_versions():
                 if equal and version == want_strip:
                     return version
 
@@ -126,9 +124,7 @@ class Package(object):
                 if x or (xx and y) or (xx and yy and z):
                     return version
         else:
-            for version in versions:
-                if version == want_strip:
-                    return version
+            return self.version_want
 
     def parse_str(self, string):
         return string.replace('{name}', self.name).replace(
