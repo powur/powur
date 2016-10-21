@@ -147,6 +147,16 @@ class Package(object):
                     if chunk:
                         output_file.write(chunk)
 
+        if content_type == 'application/octet-stream':
+            file_ext = self.url.split('.')[-1]
+
+            if file_ext == 'tar':
+                content_type = 'application/x-tar'
+            elif file_ext == 'gz' or file_ext == 'tgz':
+                content_type = 'application/x-gzip'
+            else:
+                content_type = 'application/zip'
+
         return content_type, path
 
     def extract(self, archive, type):
@@ -243,9 +253,7 @@ class Package(object):
         content_type, download_path = self.download()
         os.makedirs(self.expand_path)
 
-        # TODO application/octet-stream
-        if content_type == 'application/zip' or \
-                content_type == 'application/octet-stream':
+        if content_type == 'application/zip':
             with zipfile.ZipFile(download_path, 'r') as archive:
                 self.extract(archive, ZIP_FILE)
         elif content_type == 'application/x-tar':
